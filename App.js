@@ -6,18 +6,27 @@ import { StyleSheet } from "react-native";
 import { GlobalStyles } from "./constants/styles";
 import { AllExpenses, ManageExpense, RecentExpenses } from "./screens";
 import { Ionicons } from "@expo/vector-icons";
+import { IconButton } from "./components";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ExpenseOverview() {
   return (
     <BottomTabs.Navigator
-      screenOptions={{
+      screenOptions={({navigation,})=>({
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
-      }}
+        headerRight: ({ tintColor }) => (
+          <IconButton
+            icon="add"
+            size={24}
+            color={tintColor}
+            onPress={() => navigation.navigate('ManageExpense')}
+          />
+        ),
+      })}
     >
       <BottomTabs.Screen
         name="RecentExpenses"
@@ -57,7 +66,14 @@ export default function App() {
             component={ExpenseOverview}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="ManageExpense" component={ManageExpense} />
+          <Stack.Screen name="ManageExpense" component={ManageExpense} options={{
+            title:"Manage Expense",
+            headerStyle:{
+              backgroundColor: GlobalStyles.colors.primary500 
+            },
+            headerTintColor:'white',
+            presentation:"modal"
+          }}/>
         </Stack.Navigator>
       </NavigationContainer>
     </>
