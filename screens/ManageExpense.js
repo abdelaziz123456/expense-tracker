@@ -1,32 +1,45 @@
 import { View, Text, StyleSheet } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { GlobalStyles } from "../constants/styles";
-import { Button, IconButton } from "../components";
+import { Button, ExpenseForm, IconButton } from "../components";
 import { useNavigation } from "@react-navigation/native";
+import { ExpensesContext } from "../store/expenses-context";
 
 export default function ManageExpense(props) {
   const type = props.route.params.type;
   const expesneId = props.route.params?.expesneId;
   const navigation = useNavigation();
+  const { deleteExpense } = useContext(ExpensesContext);
   const deleteHandler = () => {
     console.log(expesneId, "deleted");
-    navigation.goBack()
+    deleteExpense(expesneId);
+    navigation.goBack();
   };
   const cancelHandler = () => {
     console.log("canelled");
-    navigation.goBack()
+    navigation.goBack();
   };
-  const confirmHandler = () => {
-    console.log("confirmed");
-    navigation.goBack()
+  const updateHandler = () => {
+    console.log("updated");
+    navigation.goBack();
+  };
+
+  const addHandler = () => {
+    console.log("added ");
+    navigation.goBack();
   };
   return (
     <View style={styles.container}>
+      <ExpenseForm />
+
       <View style={styles.buttonsContainer}>
         <Button style={styles.button} mode={"flat"} onPress={cancelHandler}>
           Cancel
         </Button>
-        <Button style={styles.button} onPress={confirmHandler}>
+        <Button
+          style={styles.button}
+          onPress={expesneId ? updateHandler : addHandler}
+        >
           {expesneId ? "Update" : "Add"}
         </Button>
       </View>
