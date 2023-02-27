@@ -7,13 +7,14 @@ import { GlobalStyles } from "./constants/styles";
 import { AllExpenses, ManageExpense, RecentExpenses } from "./screens";
 import { Ionicons } from "@expo/vector-icons";
 import { IconButton } from "./components";
+import { ExpensesProvider } from "./store/expenses-context";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ExpenseOverview() {
   return (
     <BottomTabs.Navigator
-      screenOptions={({navigation,})=>({
+      screenOptions={({ navigation }) => ({
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
@@ -23,7 +24,11 @@ function ExpenseOverview() {
             icon="add"
             size={24}
             color={tintColor}
-            onPress={() => navigation.navigate('ManageExpense')}
+            onPress={() =>
+              navigation.navigate("ManageExpense", {
+                type: "add",
+              })
+            }
           />
         ),
       })}
@@ -57,7 +62,7 @@ function ExpenseOverview() {
 
 export default function App() {
   return (
-    <>
+    <ExpensesProvider>
       <StatusBar style="auto" />
       <NavigationContainer>
         <Stack.Navigator>
@@ -66,17 +71,24 @@ export default function App() {
             component={ExpenseOverview}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="ManageExpense" component={ManageExpense} options={{
-            title:"Manage Expense",
-            headerStyle:{
-              backgroundColor: GlobalStyles.colors.primary500 
-            },
-            headerTintColor:'white',
-            presentation:"modal"
-          }}/>
+          <Stack.Screen
+            name="ManageExpense"
+            component={ManageExpense}
+            options={(navigationData) => {
+              let type = navigationData.route.params.type;
+              return {
+                title: type == "add" ? "Add Expense" : "Edit Expense",
+                headerStyle: {
+                  backgroundColor: GlobalStyles.colors.primary500,
+                },
+                headerTintColor: "white",
+                presentation: "modal",
+              };
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
-    </>
+    </ExpensesProvider>
   );
 }
 

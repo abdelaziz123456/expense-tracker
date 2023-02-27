@@ -5,6 +5,6 @@ import ExpenseListItem from "./ExpenseListItem";
 function renderExpenseItem(itemData) {
   return <ExpenseListItem expense={itemData.item}/>;
 }
-export default function ExpensesList({ expenses }) {
-  return <FlatList data={expenses} renderItem={renderExpenseItem}  keyExtractor={(item)=>item.id}/>;
+export default function ExpensesList({ expensesList }) {
+  return <FlatList data={expensesList} renderItem={renderExpenseItem}  keyExtractor={(item)=>item.id}/>;
 }
