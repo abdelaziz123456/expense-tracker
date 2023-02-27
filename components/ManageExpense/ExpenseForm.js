@@ -1,6 +1,7 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import React from "react";
 import InputComponent from "./InputComponent";
+import { GlobalStyles } from "../../constants/styles";
 
 export default function ExpenseForm() {
   const onChangeTexthandler = () => {};
@@ -24,10 +25,18 @@ export default function ExpenseForm() {
       <InputComponent
         label={"Description"}
         textInputConfig={{
-          multiline:true,
-          autoCorrect:false
+          multiline: true,
+          autoCorrect: false,
+          numberOfLines: 6,
+        
         }}
       />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  label: {
+    color: GlobalStyles.colors.primary100,
+  },
+});
