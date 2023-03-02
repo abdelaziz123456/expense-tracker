@@ -6,6 +6,7 @@ import { ExpensesContext } from "../store/expenses-context";
 
 export default function AllExpenses() {
   const { expenses, setExpenses } = useContext(ExpensesContext);
+  console.log(expenses);
   return (
     <View style={styles.container}>
       <ExpensesOutput receivedExpnese={expenses} expensesPeriod={"Total"} />

@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalStyles } from "../constants/styles";
 import { Button, ExpenseForm, IconButton } from "../components";
 import { useNavigation } from "@react-navigation/native";
@@ -9,7 +9,17 @@ export default function ManageExpense(props) {
   const type = props.route.params.type;
   const expesneId = props.route.params?.expesneId;
   const navigation = useNavigation();
-  const { deleteExpense } = useContext(ExpensesContext);
+  const { deleteExpense, addExpense } = useContext(ExpensesContext);
+  const [inputData, setInputData] = useState({
+    date: "",
+    description: "",
+    amount: "",
+  });
+
+  const onChangeTexthandler = (key, value) => {
+    setInputData({ ...inputData, [key]: value });
+    console.log("this is input data", inputData);
+  };
   const deleteHandler = () => {
     console.log(expesneId, "deleted");
     deleteExpense(expesneId);
@@ -20,17 +30,22 @@ export default function ManageExpense(props) {
     navigation.goBack();
   };
   const updateHandler = () => {
-    console.log("updated");
+    console.log("updated", inputData);
     navigation.goBack();
   };
 
   const addHandler = () => {
     console.log("added ");
+    addExpense(inputData.description, Number(inputData.amount), inputData.date);
+    setInputData({ date: "", description: "", amount: "" });
     navigation.goBack();
   };
   return (
     <View style={styles.container}>
-      <ExpenseForm />
+      <ExpenseForm
+        onChangeTexthandler={onChangeTexthandler}
+        inputData={inputData}
+      />
 
       <View style={styles.buttonsContainer}>
         <Button style={styles.button} mode={"flat"} onPress={cancelHandler}>
@@ -77,7 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    marginVertical:20
+    marginVertical: 20,
   },
   button: {
     minWidth: 120,

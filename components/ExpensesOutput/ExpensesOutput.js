@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import ExpensesSummary from "./ExpensesSummary";
 import ExpensesList from "./ExpensesList";
 import { GlobalStyles } from "../../constants/styles";
 
 export default function ExpensesOutput({ receivedExpnese, expensesPeriod }) {
+
   let Content =
     receivedExpnese.length > 0 ? (
       <ExpensesList expensesList={receivedExpnese} />
@@ -18,7 +19,7 @@ export default function ExpensesOutput({ receivedExpnese, expensesPeriod }) {
   return (
     <View style={styles.container}>
       <ExpensesSummary
-        expensesList={receivedExpnese}
+          expensesList={receivedExpnese}
         preiodName={expensesPeriod}
       />
 

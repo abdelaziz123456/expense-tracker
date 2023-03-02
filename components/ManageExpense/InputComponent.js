@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 10,
     paddingVertical: 4,
-    //textAlignVertical: "top"
+    minWidth:150
+
   },
   container: {
     marginVertical: 10,
