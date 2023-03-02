@@ -9,7 +9,7 @@ export default function ExpensesSummary({ expensesList, preiodName }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{preiodName}</Text>
-      <Text style={styles.value}>${expensesSum.toFixed(2)}</Text>
+      <Text style={styles.value}>${Number(expensesSum).toFixed(2)}</Text>
     </View>
   );
 }
@@ -17,19 +17,19 @@ export default function ExpensesSummary({ expensesList, preiodName }) {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    flexDirection:'row',
-    justifyContent:'space-between',
-    marginVertical:20,
-    paddingHorizontal:10,
-    paddingVertical:10,
-    backgroundColor:GlobalStyles.colors.primary50,
-    borderRadius:5
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginVertical: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    backgroundColor: GlobalStyles.colors.primary50,
+    borderRadius: 5,
   },
-  title:{
-    color:GlobalStyles.colors.primary400
+  title: {
+    color: GlobalStyles.colors.primary400,
   },
-  value:{
-    color:GlobalStyles.colors.primary400,
-    fontWeight:'900'
-  }
+  value: {
+    color: GlobalStyles.colors.primary400,
+    fontWeight: "900",
+  },
 });

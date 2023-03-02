@@ -16,7 +16,8 @@ export default function ManageExpense(props) {
   const type = props.route.params.type;
   const expesneId = props.route.params?.expesneId;
   const navigation = useNavigation();
-  const { deleteExpense, addExpense, expenses } = useContext(ExpensesContext);
+  const { deleteExpense, addExpense, expenses, updateExpense } =
+    useContext(ExpensesContext);
   let selectedExpense = expesneId
     ? expenses.find((exp) => exp.id == expesneId)
     : null;
@@ -57,7 +58,8 @@ export default function ManageExpense(props) {
           style={styles.button}
           onPress={
             expesneId
-              ? () => updateHandler(inputData, navigation)
+              ? () =>
+                  updateHandler(inputData, navigation, updateExpense, expesneId)
               : () =>
                   addHandler(
                     addExpense,
@@ -65,7 +67,8 @@ export default function ManageExpense(props) {
                     setInputData,
                     navigation,
                     setShowModal,
-                    setErrorMessage
+                    setErrorMessage,
+                    setButtonText
                   )
           }
         >

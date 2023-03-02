@@ -51,7 +51,7 @@ export default function ExpenseForm({
 
       {showDatePicker && (
         <DateTimePicker
-          value={selectedExpense?.date ? selectedExpense?.date : new Date()}
+        value={selectedExpense?.date ? selectedExpense?.date : new Date()}
           minimumDate={new Date(2020, 0, 1)}
           maximumDate={new Date()}
           onChange={(value) => {
@@ -70,7 +70,7 @@ export default function ExpenseForm({
         textInputConfig={{
           autoCorrect: false,
           maxLength: 20,
-          value: selectedExpense?.description && selectedExpense?.description,
+          defaultValue: selectedExpense?.description && selectedExpense?.description,
           onChangeText: (value) => onChangeTexthandler("description", value),
         }}
       />

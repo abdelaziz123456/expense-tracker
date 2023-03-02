@@ -15,7 +15,9 @@ export const deleteHandler = (
 export const cancelHandler = (navigation) => {
   navigation.goBack();
 };
-export const updateHandler = (inputData, navigation) => {
+export const updateHandler = (inputData, navigation, updateExpense,expenseId) => {
+  updateExpense(expenseId, inputData.description, inputData.amount, inputData.date);
+
   navigation.goBack();
 };
 
@@ -36,13 +38,15 @@ export const addHandler = (
   setInputData,
   navigation,
   setShowModal,
-  setErrorMessage
+  setErrorMessage,
+  setButtonText
 ) => {
   if (validation(inputData)) {
     addExpense(inputData.description, Number(inputData.amount), inputData.date);
     setInputData({ date: "", description: "", amount: "" });
     navigation.goBack();
   } else {
+    setButtonText("Cancel");
     setErrorMessage("you should enter full data");
     setShowModal(true);
   }
