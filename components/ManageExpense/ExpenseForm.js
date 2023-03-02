@@ -1,21 +1,31 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import { View, Text, TextInput, StyleSheet, Modal } from "react-native";
+import React, { useContext, useState } from "react";
 import InputComponent from "./InputComponent";
 import { GlobalStyles } from "../../constants/styles";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Button from "../uI/Button";
 import { fromMilliSecToDate } from "../../utils/date";
 import { Ionicons } from "@expo/vector-icons";
+import { ExpensesContext } from "../../store/expenses-context";
 
-
-export default function ExpenseForm({ onChangeTexthandler, inputData }) {
+export default function ExpenseForm({
+  onChangeTexthandler,
+  inputData,
+  expesneId,
+}) {
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const { expenses } = useContext(ExpensesContext);
+  let selectedExpense = expesneId
+    ? expenses.find((exp) => exp.id == expesneId)
+    : null;
+    console.log('selected is',selectedExpense)
   return (
     <View>
       <InputComponent
         label={"Amount"}
         textInputConfig={{
           keyboardType: "decimal-pad",
+          defaultValue:selectedExpense?.amount ? `${selectedExpense?.amount}` :null,
           onChangeText: (value) => onChangeTexthandler("amount", value),
         }}
       />
@@ -41,7 +51,7 @@ export default function ExpenseForm({ onChangeTexthandler, inputData }) {
 
       {showDatePicker && (
         <DateTimePicker
-          value={new Date()}
+          value={selectedExpense?.date ? selectedExpense?.date : new Date()}
           minimumDate={new Date(2020, 0, 1)}
           maximumDate={new Date()}
           onChange={(value) => {
@@ -59,7 +69,8 @@ export default function ExpenseForm({ onChangeTexthandler, inputData }) {
         label={"Description"}
         textInputConfig={{
           autoCorrect: false,
-          maxLength:20,
+          maxLength: 20,
+          value: selectedExpense?.description && selectedExpense?.description,
           onChangeText: (value) => onChangeTexthandler("description", value),
         }}
       />
