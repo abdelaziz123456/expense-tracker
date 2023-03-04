@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
 import { GlobalStyles } from "../../constants/styles";
-import { getFormattedDate } from "../../utils/date";
 import { useNavigation } from "@react-navigation/native";
+import { fromMilliSecToDate } from "../../utils/date";
 
 export default function ExpenseListItem({ expense }) {
   const navigation = useNavigation();
@@ -20,7 +20,7 @@ export default function ExpenseListItem({ expense }) {
       <View style={styles.container}>
         <View style={styles.details}>
           <Text style={styles.title}>{expense.description}</Text>
-          <Text style={styles.date}>{getFormattedDate(expense.date)}</Text>
+          <Text style={styles.date}>{fromMilliSecToDate(expense.date)}</Text>
         </View>
         <View style={styles.price}>
           <Text

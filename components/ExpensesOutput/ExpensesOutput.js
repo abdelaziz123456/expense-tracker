@@ -5,7 +5,6 @@ import ExpensesList from "./ExpensesList";
 import { GlobalStyles } from "../../constants/styles";
 
 export default function ExpensesOutput({ receivedExpnese, expensesPeriod }) {
-
   let Content =
     receivedExpnese.length > 0 ? (
       <ExpensesList expensesList={receivedExpnese} />
@@ -19,7 +18,7 @@ export default function ExpensesOutput({ receivedExpnese, expensesPeriod }) {
   return (
     <View style={styles.container}>
       <ExpensesSummary
-          expensesList={receivedExpnese}
+        expensesList={receivedExpnese}
         preiodName={expensesPeriod}
       />
 
@@ -31,7 +30,6 @@ export default function ExpensesOutput({ receivedExpnese, expensesPeriod }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: GlobalStyles.colors.primary700,
-    //  flex:1
   },
   warningText: {
     color: "white",

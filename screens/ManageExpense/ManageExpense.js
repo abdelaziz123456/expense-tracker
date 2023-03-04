@@ -1,7 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
 import React, { useContext, useState } from "react";
 import { GlobalStyles } from "../../constants/styles";
-import { Button, ExpenseForm, IconButton } from "../../components";
+import {
+  Button,
+  ExpenseForm,
+  IconButton,
+  LoadingOverlay,
+} from "../../components";
 import { useNavigation } from "@react-navigation/native";
 import { ExpensesContext } from "../../store/expenses-context";
 import {
@@ -11,9 +16,9 @@ import {
   updateHandler,
 } from "./ManageExpenseUtiles";
 import MyModal from "../../components/uI/MyModal";
+import { removeFetchedExpense } from "../../utils/http";
 
 export default function ManageExpense(props) {
-  const type = props.route.params.type;
   const expesneId = props.route.params?.expesneId;
   const navigation = useNavigation();
   const { deleteExpense, addExpense, expenses, updateExpense } =
@@ -30,13 +35,15 @@ export default function ManageExpense(props) {
   });
 
   const [showModal, setShowModal] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [buttonText, setButtonText] = useState("");
   const onChangeTexthandler = (key, value) => {
     setInputData({ ...inputData, [key]: value });
   };
-
+  if (loading) {
+    return <LoadingOverlay />;
+  }
   return (
     <View style={styles.container}>
       <ExpenseForm
@@ -59,7 +66,13 @@ export default function ManageExpense(props) {
           onPress={
             expesneId
               ? () =>
-                  updateHandler(inputData, navigation, updateExpense, expesneId)
+                  updateHandler(
+                    inputData,
+                    navigation,
+                    updateExpense,
+                    expesneId,
+                    setLoading
+                  )
               : () =>
                   addHandler(
                     addExpense,
@@ -68,7 +81,8 @@ export default function ManageExpense(props) {
                     navigation,
                     setShowModal,
                     setErrorMessage,
-                    setButtonText
+                    setButtonText,
+                    setLoading
                   )
           }
         >
@@ -103,7 +117,10 @@ export default function ManageExpense(props) {
             ? () => setShowModal(false)
             : () => {
                 setShowModal(false);
+                setLoading(true)
                 deleteExpense(expesneId);
+                removeFetchedExpense(expesneId);
+                setLoading(false)
                 navigation.goBack();
               }
         }

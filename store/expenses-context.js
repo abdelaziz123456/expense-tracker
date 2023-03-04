@@ -1,12 +1,6 @@
 import { createContext, useState } from "react";
 
-const Dummy_expenses = [
-
-
-
-
-
-];
+const Dummy_expenses = [];
 export const ExpensesContext = createContext();
 
 export const ExpensesProvider = (props) => {
@@ -14,14 +8,14 @@ export const ExpensesProvider = (props) => {
 
   // add expense to the list
 
-  const addExpense = (description, amount, date) => {
+  const addExpense = (description, amount, date, id) => {
     setExpenses([
       ...expenses,
       {
-        id:expenses.length==0 ? 'e1' : `e${Number(expenses[expenses.length - 1].id.slice(1)) + 1}`,
         description,
         amount,
         date,
+        id,
       },
     ]);
   };
