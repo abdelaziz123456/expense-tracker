@@ -1,6 +1,8 @@
 import axios from "axios";
 const backendUrl = `https://expanse-tracker-76ecb-default-rtdb.firebaseio.com`;
-
+const key = "AIzaSyCsHvHa73tSxQGwivXZAYcuxV14mS27scs";
+const authUrl =
+  "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
 export async function storeExpense(expenseData) {
   const response = await axios.post(`${backendUrl}/expenses.json`, expenseData);
   const id = response.data.name;
@@ -28,6 +30,20 @@ export function updateFetchedExpense(id, expesneData) {
   axios.put(`${backendUrl}/expenses/${id}.json`, expesneData);
 }
 
-export  function removeFetchedExpense(id) {
+export function removeFetchedExpense(id) {
   axios.delete(`${backendUrl}/expenses/${id}.json`);
 }
+
+export const signUp = async (email, password) => {
+  const response = await axios.post(
+    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCsHvHa73tSxQGwivXZAYcuxV14mS27scs`,
+    {
+      email: email,
+      password: password,
+      returnSecureToken: true,
+    }
+  );
+  console.log(response, "response is");
+
+  console.log("donee");
+};

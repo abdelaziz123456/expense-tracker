@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   inputStyle: {
-    minHeight: 40,
+    minHeight: 38,
     borderRadius: 5,
   },
   button: {

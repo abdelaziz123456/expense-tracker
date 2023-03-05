@@ -8,3 +8,4 @@ export { default as LoadingOverlay } from "./uI/LoadingOverlay.js";
 export { default as ErrorOverlay } from "./uI/ErrorOverlay.js";
 export { default as InputComponent } from "./ManageExpense/InputComponent.js";
 export { default as AuthButton } from "./uI/AuthButton.js";
+export { default as MyModal } from "./uI/MyModal.js";

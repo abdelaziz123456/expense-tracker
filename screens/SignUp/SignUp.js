@@ -1,11 +1,28 @@
 import { View, Text, Pressable } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 
-import { AuthButton, Button, InputComponent } from "../../components";
+import { AuthButton, InputComponent, MyModal } from "../../components";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./SignUp.styles";
+import { signUphandler } from "./SignUpUtiles";
 
 export default function SignUp() {
+  const [enteredData, setEnteredData] = useState({
+    email: "",
+    emailConfirmed: "",
+    password: "",
+    passwordConfirmed: "",
+  });
+
+  function onChangehandler(key, value) {
+    setEnteredData({
+      ...enteredData,
+      [key]: value,
+    });
+  }
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState();
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -15,7 +32,7 @@ export default function SignUp() {
           textInputConfig={{
             keyboardType: "email-address",
             autoCapitalize: "none",
-            onChangeText: (value) => console.log(value),
+            onChangeText: (value) => onChangehandler("email", value),
           }}
           inputStyle={styles.inputStyle}
         />
@@ -24,7 +41,7 @@ export default function SignUp() {
           textInputConfig={{
             keyboardType: "email-address",
             autoCapitalize: "none",
-            onChangeText: (value) => console.log(value),
+            onChangeText: (value) => onChangehandler("emailConfirmed", value),
           }}
           inputStyle={styles.inputStyle}
         />
@@ -33,7 +50,7 @@ export default function SignUp() {
           textInputConfig={{
             keyboardType: "number-pad",
             autoCapitalize: "none",
-            onChangeText: (value) => console.log(value),
+            onChangeText: (value) => onChangehandler("password", value),
           }}
           inputStyle={styles.inputStyle}
         />
@@ -42,13 +59,19 @@ export default function SignUp() {
           textInputConfig={{
             keyboardType: "number-pad",
             autoCapitalize: "none",
-            onChangeText: (value) => console.log(value),
+            onChangeText: (value) =>
+              onChangehandler("passwordConfirmed", value),
           }}
           inputStyle={styles.inputStyle}
         />
 
-        <AuthButton style={styles.button}>
-          <Text style={styles.buttonText}>Signup</Text>
+        <AuthButton
+          style={styles.button}
+          onPress={() =>
+            signUphandler(enteredData, setModalMessage, setShowModal)
+          }
+        >
+          <Text style={styles.buttonText}>Sign up</Text>
         </AuthButton>
 
         <Pressable
@@ -58,6 +81,12 @@ export default function SignUp() {
           <Text style={styles.buttonText}>Log in instead</Text>
         </Pressable>
       </View>
+      <MyModal
+        showModal={showModal}
+        errorMessage={modalMessage}
+        buttonText={"okay"}
+        buttonHandler={() => setShowModal(false)}
+      />
     </View>
   );
 }

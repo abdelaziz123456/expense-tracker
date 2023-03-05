@@ -76,12 +76,12 @@ const sharedOptions = {
   presentation: "modal",
 };
 export default function App() {
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(false);
   return (
     <ExpensesProvider>
       <StatusBar style="auto" />
       <NavigationContainer>
-        {auth ? (
+        {!auth ? (
           <UnAuthStack.Navigator>
             <UnAuthStack.Screen
               name="Login"
