@@ -4,12 +4,20 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { GlobalStyles } from "./constants/styles";
-import { AllExpenses, ManageExpense, RecentExpenses } from "./screens";
+import {
+  AllExpenses,
+  Login,
+  ManageExpense,
+  RecentExpenses,
+  SignUp,
+} from "./screens";
 import { Ionicons } from "@expo/vector-icons";
 import { IconButton } from "./components";
 import { ExpensesProvider } from "./store/expenses-context";
+import { useState } from "react";
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
+const UnAuthStack = createNativeStackNavigator();
 
 function ExpenseOverview() {
   return (
@@ -60,33 +68,56 @@ function ExpenseOverview() {
   );
 }
 
+const sharedOptions = {
+  headerStyle: {
+    backgroundColor: GlobalStyles.colors.primary500,
+  },
+  headerTintColor: "white",
+  presentation: "modal",
+};
 export default function App() {
+  const [auth, setAuth] = useState(true);
   return (
     <ExpensesProvider>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="ExpensesOverview"
-            component={ExpenseOverview}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ManageExpense"
-            component={ManageExpense}
-            options={(navigationData) => {
-              let type = navigationData.route.params.type;
-              return {
-                title: type == "add" ? "Add Expense" : "Edit Expense",
-                headerStyle: {
-                  backgroundColor: GlobalStyles.colors.primary500,
-                },
-                headerTintColor: "white",
-                presentation: "modal",
-              };
-            }}
-          />
-        </Stack.Navigator>
+        {auth ? (
+          <UnAuthStack.Navigator>
+            <UnAuthStack.Screen
+              name="Login"
+              component={Login}
+              options={{ ...sharedOptions, title: "Login" }}
+            />
+            <UnAuthStack.Screen
+              name="SignUp"
+              component={SignUp}
+              options={{ ...sharedOptions, title: "Sign Up" }}
+            />
+          </UnAuthStack.Navigator>
+        ) : (
+          <Stack.Navigator>
+            <Stack.Screen
+              name="ExpensesOverview"
+              component={ExpenseOverview}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ManageExpense"
+              component={ManageExpense}
+              options={(navigationData) => {
+                let type = navigationData.route.params.type;
+                return {
+                  title: type == "add" ? "Add Expense" : "Edit Expense",
+                  headerStyle: {
+                    backgroundColor: GlobalStyles.colors.primary500,
+                  },
+                  headerTintColor: "white",
+                  presentation: "modal",
+                };
+              }}
+            />
+          </Stack.Navigator>
+        )}
       </NavigationContainer>
     </ExpensesProvider>
   );

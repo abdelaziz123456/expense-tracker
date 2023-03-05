@@ -2,7 +2,7 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { GlobalStyles } from "../../constants/styles";
 
-export default function Button({ children, onPress, mode, style, bgColor }) {
+export default function AuthButton({ children, onPress, mode, style }) {
   return (
     <View style={style}>
       <Pressable
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   button: {
     borderRadius: 4,
     padding: 8,
-    backgroundColor: GlobalStyles.colors.primary500,
+    backgroundColor: GlobalStyles.colors.primary700,
   },
   flat: {
     backgroundColor: "transparent",

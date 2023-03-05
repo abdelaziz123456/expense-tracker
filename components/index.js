@@ -6,3 +6,5 @@ export { default as Button } from "./uI/Button.js";
 export { default as ExpenseForm } from "./ManageExpense/ExpenseForm.js";
 export { default as LoadingOverlay } from "./uI/LoadingOverlay.js";
 export { default as ErrorOverlay } from "./uI/ErrorOverlay.js";
+export { default as InputComponent } from "./ManageExpense/InputComponent.js";
+export { default as AuthButton } from "./uI/AuthButton.js";
