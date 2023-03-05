@@ -1,11 +1,17 @@
 import { View, Text, Pressable } from "react-native";
 import React, { useState } from "react";
 
-import { AuthButton, InputComponent, MyModal } from "../../components";
+import {
+  AuthButton,
+  ErrorOverlay,
+  InputComponent,
+  LoadingOverlay,
+  MyModal,
+} from "../../components";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./SignUp.styles";
 import { signUphandler } from "./SignUpUtiles";
-
+import SuccessComponent from "./SuccessComponent";
 export default function SignUp() {
   const [enteredData, setEnteredData] = useState({
     email: "",
@@ -24,6 +30,21 @@ export default function SignUp() {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState();
   const navigation = useNavigation();
+  const [isSigning, setIsSigning] = useState(false);
+  const [err, setError] = useState("");
+  const [isAuth, setIsAuth] = useState(false);
+  if (isSigning) {
+    return <LoadingOverlay />;
+  }
+
+  if (err) {
+    return <ErrorOverlay message={err} onConfirm={() => setError("")} />;
+  }
+
+  if (isAuth) {
+    return <SuccessComponent />;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.loginForm}>
@@ -68,7 +89,14 @@ export default function SignUp() {
         <AuthButton
           style={styles.button}
           onPress={() =>
-            signUphandler(enteredData, setModalMessage, setShowModal)
+            signUphandler(
+              enteredData,
+              setModalMessage,
+              setShowModal,
+              setIsSigning,
+              setError,
+              setIsAuth
+            )
           }
         >
           <Text style={styles.buttonText}>Sign up</Text>

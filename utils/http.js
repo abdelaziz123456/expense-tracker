@@ -43,7 +43,5 @@ export const signUp = async (email, password) => {
       returnSecureToken: true,
     }
   );
-  console.log(response, "response is");
-
-  console.log("donee");
+  return response;
 };
