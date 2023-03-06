@@ -36,7 +36,7 @@ export function removeFetchedExpense(id) {
 
 export const signUp = async (email, password) => {
   const response = await axios.post(
-    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCsHvHa73tSxQGwivXZAYcuxV14mS27scs`,
+    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${key}`,
     {
       email: email,
       password: password,
@@ -45,3 +45,16 @@ export const signUp = async (email, password) => {
   );
   return response;
 };
+
+
+export const logIn=async(email,password)=>{
+    const response = await axios.post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCsHvHa73tSxQGwivXZAYcuxV14mS27scs`,
+        {
+          email: email,
+          password: password,
+          returnSecureToken: true,
+        }
+      );
+      return response;
+}

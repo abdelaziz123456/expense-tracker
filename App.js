@@ -15,11 +15,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { IconButton } from "./components";
 import { ExpensesProvider } from "./store/expenses-context";
 import { useState } from "react";
-const Stack = createNativeStackNavigator();
-const BottomTabs = createBottomTabNavigator();
-const UnAuthStack = createNativeStackNavigator();
+import AppContent from "./components/AppContent";
 
-function ExpenseOverview() {
+const BottomTabs = createBottomTabNavigator();
+
+export function ExpenseOverview() {
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -68,57 +68,13 @@ function ExpenseOverview() {
   );
 }
 
-const sharedOptions = {
-  headerStyle: {
-    backgroundColor: GlobalStyles.colors.primary500,
-  },
-  headerTintColor: "white",
-  presentation: "modal",
-};
 export default function App() {
   const [auth, setAuth] = useState(false);
+  // const {isAuth,setIsAuth}=useContext(ExpensesContext)
   return (
     <ExpensesProvider>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        {!auth ? (
-          <UnAuthStack.Navigator>
-            <UnAuthStack.Screen
-              name="Login"
-              component={Login}
-              options={{ ...sharedOptions, title: "Login" }}
-            />
-            <UnAuthStack.Screen
-              name="SignUp"
-              component={SignUp}
-              options={{ ...sharedOptions, title: "Sign Up" }}
-            />
-          </UnAuthStack.Navigator>
-        ) : (
-          <Stack.Navigator>
-            <Stack.Screen
-              name="ExpensesOverview"
-              component={ExpenseOverview}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="ManageExpense"
-              component={ManageExpense}
-              options={(navigationData) => {
-                let type = navigationData.route.params.type;
-                return {
-                  title: type == "add" ? "Add Expense" : "Edit Expense",
-                  headerStyle: {
-                    backgroundColor: GlobalStyles.colors.primary500,
-                  },
-                  headerTintColor: "white",
-                  presentation: "modal",
-                };
-              }}
-            />
-          </Stack.Navigator>
-        )}
-      </NavigationContainer>
+      <AppContent />
     </ExpensesProvider>
   );
 }

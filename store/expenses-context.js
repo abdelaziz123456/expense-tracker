@@ -6,6 +6,8 @@ export const ExpensesContext = createContext();
 export const ExpensesProvider = (props) => {
   const [expenses, setExpenses] = useState(Dummy_expenses);
 
+  const [isAuth, setIsAuth] = useState(false);
+
   // add expense to the list
 
   const addExpense = (description, amount, date, id) => {
@@ -42,6 +44,8 @@ export const ExpensesProvider = (props) => {
         addExpense,
         deleteExpense,
         updateExpense,
+        isAuth,
+        setIsAuth,
       }}
     >
       {props.children}
