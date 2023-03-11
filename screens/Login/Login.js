@@ -4,13 +4,12 @@ import React, { useContext, useState } from "react";
 import { AuthButton, InputComponent, MyModal } from "../../components";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./Login.styles";
-import { logIn } from "../../utils/http";
 import { ExpensesContext } from "../../store/expenses-context";
 import { loginHandler } from "./LoginUtilities";
 
 export default function Login() {
   const navigation = useNavigation();
-  const { setIsAuth } = useContext(ExpensesContext);
+  const { setIsAuth, setToken } = useContext(ExpensesContext);
   const [enteredData, setEnteredData] = useState({
     email: "",
     password: "",
@@ -18,7 +17,6 @@ export default function Login() {
 
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState();
-
 
   function onChangehandler(key, value) {
     setEnteredData({
@@ -51,7 +49,13 @@ export default function Login() {
         <AuthButton
           style={styles.button}
           onPress={() =>
-            loginHandler(enteredData, setModalMessage, setShowModal, setIsAuth)
+            loginHandler(
+              enteredData,
+              setModalMessage,
+              setShowModal,
+              setIsAuth,
+              setToken
+            )
           }
         >
           <Text style={styles.buttonText}>Login</Text>

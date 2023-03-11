@@ -9,7 +9,7 @@ export default function MyModal({
   errorMessage,
   buttonText,
 }) {
-  let texts = errorMessage.split(",");
+  let texts = errorMessage?.split(",");
 
   return (
     <View style={styles.centeredModal}>
@@ -23,8 +23,10 @@ export default function MyModal({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {texts.map((text) => (
-              <Text style={styles.messageText}>{text}</Text>
+            {texts?.map((text, index) => (
+              <Text key={index} style={styles.messageText}>
+                {text}
+              </Text>
             ))}
 
             <Button onPress={buttonHandler} style={{ marginTop: 30 }}>
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   messageText: {
-    marginVertical:5,
+    marginVertical: 5,
     fontSize: 18,
     color: GlobalStyles.colors.primary700,
   },

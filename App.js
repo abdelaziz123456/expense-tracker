@@ -1,20 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import { StatusBar } from "expo-status-bar";
-import { Alert, StyleSheet } from "react-native";
+
 import { GlobalStyles } from "./constants/styles";
-import {
-  AllExpenses,
-  Login,
-  ManageExpense,
-  RecentExpenses,
-  SignUp,
-} from "./screens";
+import { AllExpenses, RecentExpenses } from "./screens";
 import { Ionicons } from "@expo/vector-icons";
 import { IconButton } from "./components";
 import { ExpensesContext, ExpensesProvider } from "./store/expenses-context";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import AppContent from "./components/AppContent";
 import { showAlert } from "./aappUtiles";
 

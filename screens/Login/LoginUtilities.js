@@ -19,7 +19,8 @@ export async function loginHandler(
   enteredData,
   setModalMessage,
   setShowModal,
-  setIsAuth
+  setIsAuth,
+  setToken
 ) {
   const isValide = validation(enteredData, setModalMessage, setShowModal);
   if (isValide) {
@@ -28,6 +29,7 @@ export async function loginHandler(
 
       if (response.status == 200) {
         setIsAuth(true);
+        setToken(response.data.idToken);
       }
     } catch (err) {
       if (err?.response?.data?.error?.message == "EMAIL_NOT_FOUND") {

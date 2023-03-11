@@ -1,4 +1,3 @@
-
 import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { ExpensesContext } from "../store/expenses-context";
@@ -13,49 +12,57 @@ const sharedOptions = {
   headerTintColor: "white",
   presentation: "modal",
 };
-export default function AppContent() {
-  const Stack = createNativeStackNavigator();
+
+function UnauthNavigator() {
   const UnAuthStack = createNativeStackNavigator();
+  return (
+    <UnAuthStack.Navigator>
+      <UnAuthStack.Screen
+        name="Login"
+        component={Login}
+        options={{ ...sharedOptions, title: "Login" }}
+      />
+      <UnAuthStack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{ ...sharedOptions, title: "Sign Up" }}
+      />
+    </UnAuthStack.Navigator>
+  );
+}
+
+function AuthNavigator() {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ExpensesOverview"
+        component={ExpenseOverview}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ManageExpense"
+        component={ManageExpense}
+        options={(navigationData) => {
+          let type = navigationData.route.params.type;
+          return {
+            title: type == "add" ? "Add Expense" : "Edit Expense",
+            headerStyle: {
+              backgroundColor: GlobalStyles.colors.primary500,
+            },
+            headerTintColor: "white",
+            presentation: "modal",
+          };
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+export default function AppContent() {
   const { isAuth } = useContext(ExpensesContext);
   return (
     <NavigationContainer>
-      {!isAuth ? (
-        <UnAuthStack.Navigator>
-          <UnAuthStack.Screen
-            name="Login"
-            component={Login}
-            options={{ ...sharedOptions, title: "Login" }}
-          />
-          <UnAuthStack.Screen
-            name="SignUp"
-            component={SignUp}
-            options={{ ...sharedOptions, title: "Sign Up" }}
-          />
-        </UnAuthStack.Navigator>
-      ) : (
-        <Stack.Navigator>
-          <Stack.Screen
-            name="ExpensesOverview"
-            component={ExpenseOverview}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ManageExpense"
-            component={ManageExpense}
-            options={(navigationData) => {
-              let type = navigationData.route.params.type;
-              return {
-                title: type == "add" ? "Add Expense" : "Edit Expense",
-                headerStyle: {
-                  backgroundColor: GlobalStyles.colors.primary500,
-                },
-                headerTintColor: "white",
-                presentation: "modal",
-              };
-            }}
-          />
-        </Stack.Navigator>
-      )}
+      {isAuth ? <AuthNavigator /> : <UnauthNavigator />}
     </NavigationContainer>
   );
 }

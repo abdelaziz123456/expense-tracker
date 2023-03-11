@@ -3,7 +3,6 @@ import { Alert } from "react-native";
 const logoutHandler = (setToken, setIsAuth) => {
   setToken("");
   setIsAuth(false);
-  console.log("logged out done ");
 };
 
 export const showAlert = (setToken, setIsAuth) => {

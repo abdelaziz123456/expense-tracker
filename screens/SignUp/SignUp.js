@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 
 import {
@@ -33,9 +33,6 @@ export default function SignUp() {
   const [isSigning, setIsSigning] = useState(false);
   const [err, setError] = useState("");
   const [isAuth, setIsAuth] = useState(false);
-  if (isSigning) {
-    return <LoadingOverlay />;
-  }
 
   if (err) {
     return <ErrorOverlay message={err} onConfirm={() => setError("")} />;
@@ -99,7 +96,11 @@ export default function SignUp() {
             )
           }
         >
-          <Text style={styles.buttonText}>Sign up</Text>
+          {isSigning ? (
+            <ActivityIndicator size={"small"} color={"white"} />
+          ) : (
+            <Text style={styles.buttonText}>Sign up</Text>
+          )}
         </AuthButton>
 
         <Pressable
@@ -109,6 +110,7 @@ export default function SignUp() {
           <Text style={styles.buttonText}>Log in instead</Text>
         </Pressable>
       </View>
+
       <MyModal
         showModal={showModal}
         errorMessage={modalMessage}

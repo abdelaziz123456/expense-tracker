@@ -52,13 +52,21 @@ export async function signUphandler(
         enteredData.email,
         Number(enteredData.password)
       );
-      console.log("response is", response);
       if (response.status == 200) {
+        setError("");
+        setModalMessage("");
         setIsAuth(true);
       }
     } catch (err) {
-      setError(err?.response?.data?.error?.message);
-      console.log("this is error");
+      if (err?.response?.data?.error?.message == "INVALID_EMAIL") {
+        setModalMessage("Invalid Email");
+        setShowModal(true);
+      } else {
+        setModalMessage(err?.response?.data?.error?.message);
+        setShowModal(true);
+      }
+
+      console.log(err?.response?.data?.error?.message);
     }
 
     setIsSigning(false);
