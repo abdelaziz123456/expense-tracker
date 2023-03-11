@@ -19,37 +19,6 @@ export default function Login() {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState();
 
-  // async function loginHandler() {
-  //   console.log("entered data", enteredData);
-  //   const isValide = validation();
-  //   if (isValide) {
-  //     console.log("is valid");
-  //     try {
-  //       const response = await logIn(enteredData.email, enteredData.password);
-  //       console.log(response, "if");
-  //       if (response.status == 200) {
-  //         setIsAuth(true);
-  //       }
-  //     } catch (err) {
-  //       setIsAuth(false);
-  //       console.log("this is error", err);
-  //     }
-  //   }
-  // }
-  // function validation() {
-  //   if (!enteredData.email.includes("@")) {
-  //     setModalMessage("email should contains '@'");
-  //     setShowModal(true);
-  //     return false;
-  //   }
-  //   if (!enteredData.email || !enteredData.password) {
-  //     setModalMessage("you should fill all fields !");
-  //     setShowModal(true);
-  //     return false;
-  //   }
-
-  //   return true;
-  // }
 
   function onChangehandler(key, value) {
     setEnteredData({

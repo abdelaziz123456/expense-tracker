@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { GlobalStyles } from "./constants/styles";
 import {
   AllExpenses,
@@ -13,13 +13,16 @@ import {
 } from "./screens";
 import { Ionicons } from "@expo/vector-icons";
 import { IconButton } from "./components";
-import { ExpensesProvider } from "./store/expenses-context";
-import { useState } from "react";
+import { ExpensesContext, ExpensesProvider } from "./store/expenses-context";
+import { useContext, useState } from "react";
 import AppContent from "./components/AppContent";
+import { showAlert } from "./aappUtiles";
 
 const BottomTabs = createBottomTabNavigator();
 
 export function ExpenseOverview() {
+  const { setIsAuth, setToken } = useContext(ExpensesContext);
+
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -27,7 +30,8 @@ export function ExpenseOverview() {
         headerTintColor: "white",
         tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         tabBarActiveTintColor: GlobalStyles.colors.accent500,
-        headerRight: ({ tintColor }) => (
+        headerTitleAlign: "center",
+        headerLeft: ({ tintColor }) => (
           <IconButton
             icon="add"
             size={24}
@@ -37,6 +41,15 @@ export function ExpenseOverview() {
                 type: "add",
               })
             }
+          />
+        ),
+
+        headerRight: ({ tintColor }) => (
+          <IconButton
+            icon="ios-exit-outline"
+            size={24}
+            color={tintColor}
+            onPress={() => showAlert(setToken, setIsAuth)}
           />
         ),
       })}
@@ -69,8 +82,6 @@ export function ExpenseOverview() {
 }
 
 export default function App() {
-  const [auth, setAuth] = useState(false);
-  // const {isAuth,setIsAuth}=useContext(ExpensesContext)
   return (
     <ExpensesProvider>
       <StatusBar style="auto" />
@@ -78,12 +89,3 @@ export default function App() {
     </ExpensesProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -33,7 +33,7 @@ export async function loginHandler(
       if (err?.response?.data?.error?.message == "EMAIL_NOT_FOUND") {
         setModalMessage("email doesn't exists");
       } else if (err?.response?.data?.error?.message == "INVALID_PASSWORD") {
-        setModalMessage("password is incorrect");
+        setModalMessage("password is incorrect , please try again");
       } else {
         setModalMessage("something went wrong");
       }
