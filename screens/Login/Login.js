@@ -7,10 +7,12 @@ import { styles } from "./Login.styles";
 import { logIn } from "../../utils/http";
 import { ExpensesContext } from "../../store/expenses-context";
 import { loginHandler } from "./LoginUtilities";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAsyncItem } from "../../aappUtiles";
 
 export default function Login() {
   const navigation = useNavigation();
-  const { setIsAuth } = useContext(ExpensesContext);
+  const { setIsAuth, isAuth } = useContext(ExpensesContext);
   const [enteredData, setEnteredData] = useState({
     email: "",
     password: "",
@@ -19,13 +21,14 @@ export default function Login() {
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState();
 
-
   function onChangehandler(key, value) {
     setEnteredData({
       ...enteredData,
       [key]: value,
     });
   }
+
+  console.log("data is", getAsyncItem("token"));
   return (
     <View style={styles.container}>
       <View style={styles.loginForm}>
