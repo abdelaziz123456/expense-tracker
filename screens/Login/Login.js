@@ -6,10 +6,13 @@ import { useNavigation } from "@react-navigation/native";
 import { styles } from "./Login.styles";
 import { ExpensesContext } from "../../store/expenses-context";
 import { loginHandler } from "./LoginUtilities";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAsyncItem } from "../../aappUtiles";
 
 export default function Login() {
   const navigation = useNavigation();
-  const { setIsAuth, setToken } = useContext(ExpensesContext);
+  const { setIsAuth, setToken, isAuth } = useContext(ExpensesContext);
+
   const [enteredData, setEnteredData] = useState({
     email: "",
     password: "",
@@ -24,6 +27,8 @@ export default function Login() {
       [key]: value,
     });
   }
+
+  console.log("data is", getAsyncItem("token"));
   return (
     <View style={styles.container}>
       <View style={styles.loginForm}>

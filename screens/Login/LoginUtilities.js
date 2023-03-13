@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logIn } from "../../utils/http";
 
 export function validation(enteredData, setModalMessage, setShowModal) {
@@ -30,6 +31,7 @@ export async function loginHandler(
       if (response.status == 200) {
         setIsAuth(true);
         setToken(response.data.idToken);
+        AsyncStorage.setItem("token", response?.data?.idToken);
       }
     } catch (err) {
       if (err?.response?.data?.error?.message == "EMAIL_NOT_FOUND") {
