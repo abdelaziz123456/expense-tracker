@@ -1,17 +1,16 @@
 import { View, Text, Pressable } from "react-native";
 import React, { useContext, useState } from "react";
 
-import { AuthButton, InputComponent, MyModal } from "../../components";
+import { AuthButton,InputComponent, MyModal } from "../../components";
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "./Login.styles";
 import { ExpensesContext } from "../../store/expenses-context";
 import { loginHandler } from "./LoginUtilities";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getAsyncItem } from "../../aappUtiles";
 
 export default function Login() {
   const navigation = useNavigation();
-  const { setIsAuth, setToken, isAuth } = useContext(ExpensesContext);
+  const { setIsAuth, setToken } = useContext(ExpensesContext);
 
   const [enteredData, setEnteredData] = useState({
     email: "",
@@ -28,7 +27,6 @@ export default function Login() {
     });
   }
 
-  console.log("data is", getAsyncItem("token"));
   return (
     <View style={styles.container}>
       <View style={styles.loginForm}>
@@ -44,6 +42,7 @@ export default function Login() {
         <InputComponent
           label={"Password"}
           textInputConfig={{
+            secureTextEntry: true,
             keyboardType: "number-pad",
             autoCapitalize: "none",
             onChangeText: (value) => onChangehandler("password", value),
@@ -59,7 +58,7 @@ export default function Login() {
               setModalMessage,
               setShowModal,
               setIsAuth,
-              setToken
+              setToken,
             )
           }
         >

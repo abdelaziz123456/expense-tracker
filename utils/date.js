@@ -8,9 +8,9 @@ export function getDateMinusDays(date, days) {
 
 export function fromMilliSecToDate(date) {
   let newDate = new Date(date);
-  let month = newDate.toLocaleDateString("default", { month: "2-digit" });
-  let days = newDate.toLocaleDateString("default", { day: "2-digit" });
-  let year = newDate.toLocaleDateString("default", { year: "numeric" });
-  let reformattedDate = days + "-" + month + "-" + year;
+  let days = newDate.toLocaleDateString("default", { month: "2-digit" }).slice(3,5);
+  let month = newDate.toLocaleDateString("default", { day: "2-digit" }).slice(0,2);
+  let year = newDate.toLocaleDateString("default", { year: "numeric" }).slice(6);
+  let reformattedDate = days + "/" + month + "/" + year;
   return reformattedDate;
 }

@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 const backendUrl = `https://expanse-tracker-76ecb-default-rtdb.firebaseio.com`;
 const key = "AIzaSyCsHvHa73tSxQGwivXZAYcuxV14mS27scs";
@@ -55,5 +56,6 @@ export const logIn = async (email, password) => {
       returnSecureToken: true,
     }
   );
+  await AsyncStorage.setItem("token", response?.data?.idToken);
   return response;
 };

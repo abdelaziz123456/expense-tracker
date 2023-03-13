@@ -7,6 +7,7 @@ import Button from "../uI/Button";
 
 import { Ionicons } from "@expo/vector-icons";
 import { ExpensesContext } from "../../store/expenses-context";
+import { fromMilliSecToDate } from "../../utils/date";
 
 export default function ExpenseForm({
   onChangeTexthandler,
@@ -18,7 +19,7 @@ export default function ExpenseForm({
   let selectedExpense = expesneId
     ? expenses.find((exp) => exp.id == expesneId)
     : null;
-  console.log("selected is", selectedExpense);
+
   return (
     <View>
       <InputComponent
@@ -39,7 +40,9 @@ export default function ExpenseForm({
         >
           <View style={styles.iconContainer}>
             <Text style={{ color: "white" }}>
-              {inputData.date ? "Time is picked" : "Pick a date"}
+              {inputData.date
+                ? fromMilliSecToDate(inputData.date)
+                : "Pick a date"}
             </Text>
 
             <Ionicons
@@ -53,7 +56,7 @@ export default function ExpenseForm({
 
       {showDatePicker && (
         <DateTimePicker
-          value={new Date()}
+          value={inputData.date ? new Date(inputData.date) : new Date()}
           minimumDate={new Date(2020, 0, 1)}
           maximumDate={new Date()}
           onChange={(value) => {

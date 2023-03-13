@@ -5,7 +5,6 @@ import {
   AuthButton,
   ErrorOverlay,
   InputComponent,
-  LoadingOverlay,
   MyModal,
 } from "../../components";
 import { useNavigation } from "@react-navigation/native";
@@ -66,6 +65,7 @@ export default function SignUp() {
         <InputComponent
           label={"Password"}
           textInputConfig={{
+            secureTextEntry: true,
             keyboardType: "number-pad",
             autoCapitalize: "none",
             onChangeText: (value) => onChangehandler("password", value),
@@ -75,6 +75,7 @@ export default function SignUp() {
         <InputComponent
           label={"Confirm Password"}
           textInputConfig={{
+            secureTextEntry: true,
             keyboardType: "number-pad",
             autoCapitalize: "none",
             onChangeText: (value) =>

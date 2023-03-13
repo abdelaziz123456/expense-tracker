@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login, ManageExpense, SignUp } from "../screens";
 import { ExpenseOverview } from "../App";
 import { GlobalStyles } from "../constants/styles";
+
 const sharedOptions = {
   headerStyle: {
     backgroundColor: GlobalStyles.colors.primary500,

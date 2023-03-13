@@ -9,12 +9,14 @@ import { IconButton } from "./components";
 import { ExpensesContext, ExpensesProvider } from "./store/expenses-context";
 import { useContext } from "react";
 import AppContent from "./components/AppContent";
-import { showAlert } from "./aappUtiles";
+import {showAlert } from "./aappUtiles";
 
 const BottomTabs = createBottomTabNavigator();
 
 export function ExpenseOverview() {
   const { setIsAuth, setToken } = useContext(ExpensesContext);
+
+
 
   return (
     <BottomTabs.Navigator
@@ -47,6 +49,7 @@ export function ExpenseOverview() {
         ),
       })}
     >
+
       <BottomTabs.Screen
         name="RecentExpenses"
         component={RecentExpenses}

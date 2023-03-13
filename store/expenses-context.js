@@ -1,6 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, useState } from "react";
-import { getAsyncItem } from "../aappUtiles";
+import { createContext,useState } from "react";
 
 const Dummy_expenses = [];
 export const ExpensesContext = createContext();
@@ -8,7 +7,7 @@ export const ExpensesContext = createContext();
 export const ExpensesProvider = (props) => {
   const [expenses, setExpenses] = useState(Dummy_expenses);
 
-  const [isAuth, setIsAuth] = useState(getAsyncItem("token") ? true : false);
+  const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useState("");
   // add expense to the list
 
