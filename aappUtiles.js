@@ -1,10 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
-
+async function clearToken() {
+  await AsyncStorage.removeItem("token");
+}
 const logoutHandler = (setToken, setIsAuth) => {
   setToken("");
   setIsAuth(false);
+  clearToken()
 };
 
 export const showAlert = (setToken, setIsAuth) => {

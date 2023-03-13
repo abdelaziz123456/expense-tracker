@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { ExpensesContext } from "../store/expenses-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Login, ManageExpense, SignUp } from "../screens";
 import { ExpenseOverview } from "../App";
 import { GlobalStyles } from "../constants/styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const sharedOptions = {
   headerStyle: {
@@ -59,11 +60,27 @@ function AuthNavigator() {
     </Stack.Navigator>
   );
 }
+
 export default function AppContent() {
+  const { token, setToken, setIsAuth } = useContext(ExpensesContext);
+  async function getToke() {
+    let token = "";
+    try {
+      token = await AsyncStorage.getItem("token");
+      setToken(token);
+    } catch (err) {
+      console.log(err);
+    }
+    return token;
+  }
+
+  useEffect(() => {
+    getToke();
+  }, []);
   const { isAuth } = useContext(ExpensesContext);
   return (
     <NavigationContainer>
-      {isAuth ? <AuthNavigator /> : <UnauthNavigator />}
+      {token ? <AuthNavigator /> : <UnauthNavigator />}
     </NavigationContainer>
   );
 }
